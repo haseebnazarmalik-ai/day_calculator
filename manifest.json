@@ -1,0 +1,16 @@
+{
+  "name": "90 Days Calculator",
+  "short_name": "90Days",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#764ba2",
+  "theme_color": "#764ba2",
+  "description": "Calculate date after 90 days offline.",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2370/2370264.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
