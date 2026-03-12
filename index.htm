@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>90 Days Future Date</title>
+    <title>90 Days Planner Pro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#764ba2">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Modern Gradient Background */
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,131 +22,101 @@
             color: #fff;
         }
 
-        /* Glassmorphism Card Design */
+        /* Glass Card Effect */
         .app-card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px;
             border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             text-align: center;
-            width: 350px;
-            animation: fadeIn 0.8s ease-in-out;
+            width: 90%;
+            max-width: 380px;
+            animation: fadeIn 1s ease-out;
         }
 
-        h1 {
-            font-size: 22px;
+        h1 { font-size: 26px; margin-bottom: 10px; font-weight: 700; color: #fff; }
+        p.subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 30px; }
+
+        .input-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px;
+            border-radius: 15px;
             margin-bottom: 25px;
-            font-weight: 600;
-            letter-spacing: 1px;
         }
 
-        .input-group {
-            margin-bottom: 30px;
-        }
-
-        /* Custom Styled Date Input */
         input[type="date"] {
-            background: rgba(255, 255, 255, 0.9);
             border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
+            background: transparent;
+            padding: 12px;
+            font-size: 18px;
             color: #333;
             width: 100%;
             outline: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
+            text-align: center;
         }
 
-        /* Result Section */
-        .result-container {
+        .result-box {
             margin-top: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            display: none; /* Initial Hidden */
-            animation: slideUp 0.5s ease-out;
+            display: none;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            animation: slideUp 0.6s ease-out;
         }
 
-        .day-text {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 5px 0;
-            color: #ffeb3b; /* Vibrant Yellow for Day */
-        }
+        .label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 8px; }
+        .day-output { font-size: 32px; font-weight: 700; color: #00d2ff; margin: 0; }
+        .date-output { font-size: 22px; font-weight: 400; color: #3a7bd5; background: #fff; display: inline-block; padding: 5px 15px; border-radius: 50px; margin-top: 10px; }
 
-        .date-text {
-            font-size: 20px;
-            opacity: 0.9;
-            letter-spacing: 1px;
-        }
-
-        .label {
-            font-size: 12px;
-            text-transform: uppercase;
-            opacity: 0.7;
-            margin-bottom: 10px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="app-card">
-    <h1>90 Days Planer</h1>
+    <h1>90 Days Plan</h1>
+    <p class="subtitle">Quickly find the date after 3 months</p>
     
-    <div class="input-group">
-        <p style="font-size: 14px; margin-bottom: 10px; opacity: 0.8;">Select your start date:</p>
-        <input type="date" id="targetDate" onchange="calculate()">
+    <div class="input-wrapper">
+        <input type="date" id="dateInput" onchange="calcDate()">
     </div>
 
-    <div class="result-container" id="result">
-        <div class="label">The date after 90 days is:</div>
-        <div class="day-text" id="displayDay">---</div>
-        <div class="date-text" id="displayDate">---</div>
+    <div class="result-box" id="resultBox">
+        <div class="label">Future Date</div>
+        <div class="day-output" id="dayName">---</div>
+        <div class="date-output" id="fullDate">---</div>
     </div>
 </div>
 
 <script>
-    function calculate() {
-        const input = document.getElementById('targetDate').value;
-        const resultDiv = document.getElementById('result');
-        const displayDay = document.getElementById('displayDay');
-        const displayDate = document.getElementById('displayDate');
+    // 1. Service Worker Register (For Offline)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log("Offline Mode Ready!");
+            });
+        });
+    }
 
-        if (input) {
-            let date = new Date(input);
-            
-            // Adding 90 Days
-            date.setDate(date.getDate() + 90);
+    // 2. Logic to Add 90 Days
+    function calcDate() {
+        const val = document.getElementById('dateInput').value;
+        if (val) {
+            let d = new Date(val);
+            d.setDate(d.getDate() + 90);
 
-            // Getting Day Name (Monday, etc.)
-            const dayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+            const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(d);
+            const formattedDate = d.toLocaleDateString('en-GB').replace(/\//g, ' / ');
 
-            // Formatting Date (DD-MM-YYYY)
-            const dd = String(date.getDate()).padStart(2, '0');
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const yyyy = date.getFullYear();
-            
-            displayDay.innerText = dayName;
-            displayDate.innerText = `${dd} / ${mm} / ${yyyy}`;
-            
-            // Show result with animation
-            resultDiv.style.display = 'block';
+            document.getElementById('dayName').innerText = day;
+            document.getElementById('fullDate').innerText = formattedDate;
+            document.getElementById('resultBox').style.display = 'block';
         }
     }
 </script>
