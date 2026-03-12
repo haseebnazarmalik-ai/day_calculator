@@ -1,7 +1,7 @@
 {
   "name": "90 Days Calculator",
   "short_name": "90Days",
-  "start_url": "index.htm",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#764ba2",
   "theme_color": "#764ba2",
