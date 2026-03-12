@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>90 Days Future Date</title>
+    <style>
+        /* Modern Gradient Background */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        /* Glassmorphism Card Design */
+        .app-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        /* Custom Styled Date Input */
+        input[type="date"] {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #333;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        /* Result Section */
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: none; /* Initial Hidden */
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .day-text {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 5px 0;
+            color: #ffeb3b; /* Vibrant Yellow for Day */
+        }
+
+        .date-text {
+            font-size: 20px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-card">
+    <h1>90 Days Planer</h1>
+    
+    <div class="input-group">
+        <p style="font-size: 14px; margin-bottom: 10px; opacity: 0.8;">Select your start date:</p>
+        <input type="date" id="targetDate" onchange="calculate()">
+    </div>
+
+    <div class="result-container" id="result">
+        <div class="label">The date after 90 days is:</div>
+        <div class="day-text" id="displayDay">---</div>
+        <div class="date-text" id="displayDate">---</div>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const input = document.getElementById('targetDate').value;
+        const resultDiv = document.getElementById('result');
+        const displayDay = document.getElementById('displayDay');
+        const displayDate = document.getElementById('displayDate');
+
+        if (input) {
+            let date = new Date(input);
+            
+            // Adding 90 Days
+            date.setDate(date.getDate() + 90);
+
+            // Getting Day Name (Monday, etc.)
+            const dayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+
+            // Formatting Date (DD-MM-YYYY)
+            const dd = String(date.getDate()).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yyyy = date.getFullYear();
+            
+            displayDay.innerText = dayName;
+            displayDate.innerText = `${dd} / ${mm} / ${yyyy}`;
+            
+            // Show result with animation
+            resultDiv.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
