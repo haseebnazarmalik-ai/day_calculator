@@ -20,6 +20,7 @@
             height: 100vh;
             margin: 0;
             color: #fff;
+            overflow: hidden;
         }
 
         /* Glass Card Effect */
@@ -81,7 +82,7 @@
 
 <div class="app-card">
     <h1>90 Days Plan</h1>
-    <p class="subtitle">Quickly find the date after 3 months</p>
+    <p class="subtitle">Find the date after 3 months</p>
     
     <div class="input-wrapper">
         <input type="date" id="dateInput" onchange="calcDate()">
@@ -95,12 +96,12 @@
 </div>
 
 <script>
-    // 1. Service Worker Register (For Offline)
+    // 1. Service Worker Registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js').then(() => {
-                console.log("Offline Mode Ready!");
-            });
+                console.log("Offline Ready!");
+            }).catch(err => console.log("SW Error:", err));
         });
     }
 
@@ -109,10 +110,16 @@
         const val = document.getElementById('dateInput').value;
         if (val) {
             let d = new Date(val);
+            // Adding 90 days
             d.setDate(d.getDate() + 90);
 
             const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(d);
-            const formattedDate = d.toLocaleDateString('en-GB').replace(/\//g, ' / ');
+            
+            // Format: DD / MM / YYYY
+            const dd = String(d.getDate()).padStart(2, '0');
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const yyyy = d.getFullYear();
+            const formattedDate = `${dd} / ${mm} / ${yyyy}`;
 
             document.getElementById('dayName').innerText = day;
             document.getElementById('fullDate').innerText = formattedDate;
